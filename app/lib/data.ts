@@ -8,6 +8,7 @@ import {
   Revenue,
 } from './definitions';
 import { formatCurrency } from './utils';
+import { customCurrencyFormatter } from './helpers';
 
 export async function fetchRevenue() {
   try {
@@ -19,7 +20,6 @@ export async function fetchRevenue() {
 
     const data = await sql<Revenue>`SELECT * FROM revenue`;
 
-    // console.log('Data fetch completed after 3 seconds.');
 
     return data.rows;
   } catch (error) {
@@ -39,7 +39,7 @@ export async function fetchLatestInvoices() {
 
     const latestInvoices = data.rows.map((invoice) => ({
       ...invoice,
-      amount: formatCurrency(invoice.amount),
+      amount: customCurrencyFormatter(invoice.amount),
     }));
     return latestInvoices;
   } catch (error) {
@@ -48,28 +48,44 @@ export async function fetchLatestInvoices() {
   }
 }
 
+export async function fetchPaidInvoices() {
+  try {
+    const paidInvoices = await sql`SELECT COUNT(*) AS "invoices" `;
+    return Number(paidInvoices.rows[0].paid ?? '0');
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch invoices.');
+  }
+}
+export async function fetchCustomerById(firstName: string) {
+  try {
+
+    const data = await sql`SELECT * FROM customers WHERE name ILIKE ${`${firstName}%`}`;
+    return data.rows;
+
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch customer by id data.');
+  } 
+
+}
 export async function fetchCardData() {
   try {
     // You can probably combine these into a single SQL query
     // However, we are intentionally splitting them to demonstrate
     // how to initialize multiple queries in parallel with JS.
-    const invoiceCountPromise = sql`SELECT COUNT(*) FROM invoices`;
     const customerCountPromise = sql`SELECT COUNT(*) FROM customers`;
-    const invoiceStatusPromise = sql`SELECT
-         SUM(CASE WHEN status = 'paid' THEN amount ELSE 0 END) AS "paid",
-         SUM(CASE WHEN status = 'pending' THEN amount ELSE 0 END) AS "pending"
-         FROM invoices`;
+    const invoicesDataPromise = sql`SELECT count(*) as "collected", SUM(CASE WHEN status = 'paid' THEN amount ELSE 0 END) as "paid", SUM(CASE WHEN status = 'pending' THEN amount ELSE 0 END) as "pending" FROM invoices`;
+
 
     const data = await Promise.all([
-      invoiceCountPromise,
+      invoicesDataPromise,
       customerCountPromise,
-      invoiceStatusPromise,
     ]);
-
-    const numberOfInvoices = Number(data[0].rows[0].count ?? '0');
+    const numberOfInvoices = Number(data[0].rows[0].collected ?? '0');
+    const totalPaidInvoices = formatCurrency(data[0].rows[0].paid ?? '0');
+    const totalPendingInvoices = formatCurrency(data[0].rows[0].pending ?? '0');
     const numberOfCustomers = Number(data[1].rows[0].count ?? '0');
-    const totalPaidInvoices = formatCurrency(data[2].rows[0].paid ?? '0');
-    const totalPendingInvoices = formatCurrency(data[2].rows[0].pending ?? '0');
 
     return {
       numberOfCustomers,
@@ -119,6 +135,48 @@ export async function fetchFilteredInvoices(
   }
 }
 
+const BENUTZER_PRO_SEITE = 6;
+export async function fetchBenutzerBeiFilter(query: string, aktuellSeite: number, filter?: 'name' | 'email',) {
+  const offset = (aktuellSeite - 1) * BENUTZER_PRO_SEITE;
+
+  try {
+    let customers;
+    if (!filter) {
+      customers = await sql`SELECT * FROM customers 
+      WHERE id::text ILIKE ${`%${query}%`} OR 
+      name ILIKE ${`%${query}%`} OR 
+      email ILIKE ${`%${query}%`}`;
+    } else {
+      customers = await sql`SELECT * FROM customers
+      WHERE ${filter} ILIKE ${`%${query}%`}`;
+    }
+    return customers.rows;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch total number of invoices.');
+  }
+}
+
+export async function fetchBenutzerSeiten(query: string, filter?: 'name' | 'email') {
+  let sqlQuery;
+  if (!filter) {
+    sqlQuery = sql`SELECT COUNT(*) FROM customers 
+      WHERE id::text ILIKE ${`%${query}%`} OR 
+      name ILIKE ${`%${query}%`} OR 
+      email ILIKE ${`%${query}%`}`;
+  } else {
+    sqlQuery = sql`SELECT COUNT(*) FROM customers
+      WHERE ${filter} ILIKE ${`%${query}%`}`;
+  }
+  try {
+    const count = await sqlQuery;
+    const totalPages = Math.ceil(Number(count.rows[0].count) / BENUTZER_PRO_SEITE);
+    return totalPages;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Fehler bei erhaltung fur Gesamtzahl der Benutzer.');
+  }
+}
 export async function fetchInvoicesPages(query: string) {
   try {
     const count = await sql`SELECT COUNT(*)
