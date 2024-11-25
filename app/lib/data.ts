@@ -191,6 +191,7 @@ export async function fetchInvoicesPages(query: string) {
   `;
 
     const totalPages = Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE);
+    console.log("Gesamtzahl der Seiten", totalPages)
     return totalPages;
   } catch (error) {
     console.error('Database Error:', error);
@@ -198,7 +199,7 @@ export async function fetchInvoicesPages(query: string) {
   }
 }
 
-export async function fetchInvoiceById(id: string) {
+export async function fetchRechnungBeiId(id: string) {
   try {
     const data = await sql<InvoiceForm>`
       SELECT

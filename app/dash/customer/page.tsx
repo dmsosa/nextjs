@@ -1,11 +1,11 @@
-import { fetchBenutzerBeiFilter, fetchBenutzerSeiten, fetchCustomerById } from "@/app/lib/data"
-import { BenutzerTabelle, BenutzerTabelleSkeleton } from "@/app/ui/customers/benutzer-table";
+import { fetchBenutzerBeiFilter, fetchBenutzerSeiten } from "@/app/lib/data"
+import BenutzerTabelle, { BenutzerTabelleSkeleton } from "@/app/ui/customers/benutzer-tabelle";
 import { lusitana } from "@/app/ui/fonts";
 import Pagination from "@/app/ui/invoices/pagination";
 import Suchen from "@/app/ui/search";
 import { Suspense } from "react";
 
-export default async function Etwa(props: { params?: Promise<{ query: string, page: string }> }) {
+export default async function Page(props: { params?: Promise<{ query: string, page: string }> }) {
 
     //fetch customer
     const searchParams = await props.params;

@@ -9,10 +9,10 @@ import { fetchCardData } from '@/app/lib/data';
 
 
 const iconMap = {
-  collected: BanknotesIcon,
-  customers: UserGroupIcon,
-  pending: ClockIcon,
-  invoices: InboxIcon,
+  gesammelt: BanknotesIcon,
+  benutzer: UserGroupIcon,
+  ausstehend: ClockIcon,
+  rechnungen: InboxIcon,
 };
 
 export default async function CardWrapper() {
@@ -27,29 +27,31 @@ export default async function CardWrapper() {
     <>
       {/* NOTE: Uncomment this code in Chapter 9 */}
 
-      <Card title="Collected" value={totalPaidInvoices} type="collected" />
-      <Card title="Pending" value={totalPendingInvoices} type="pending" />
-      <Card title="Total Invoices" value={numberOfInvoices} type="invoices" />
+      <Card value={totalPaidInvoices} type="gesammelt" />
+      <Card value={totalPendingInvoices} type="ausstehend" />
+      <Card value={numberOfInvoices} type="rechnungen" />
       <Card
-        title="Total Customers"
         value={numberOfCustomers}
-        type="customers"
+        type="benutzer"
       />
     </>
   );
 }
 
 export function Card({
-  title,
   value,
   type,
 }: {
-  title: string;
   value: number | string;
-  type: 'invoices' | 'customers' | 'pending' | 'collected';
+  type: 'rechnungen' | 'benutzer' | 'ausstehend' | 'gesammelt';
 }) {
-  const Icon = iconMap[type];
 
+  const capitalize = (text: string) => {
+    const firstLetter = type.charAt(0);
+    return firstLetter.toUpperCase() + text.slice(1);
+  };
+  const Icon = iconMap[type];
+  const title = type === 'benutzer' || type === 'rechnungen' ? 'Gesamtzahl der ' + capitalize(type) : capitalize(type);
   return (
     <div className="rounded-xl bg-gray-50 p-2 shadow-sm">
       <div className="flex p-4">

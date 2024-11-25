@@ -16,3 +16,218 @@ input[type='number']::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
+.coffee-wrapper {
+  position: relative;
+  margin: auto;
+  height: 250px;
+  width: 250px;
+}
+
+.coffee-wrapper::after {
+  content: "";
+  position: absolute;
+  background-color: #059669;
+  width: 200px;
+  height: 20px;
+  border-radius: 10px;
+  bottom: 0px;
+  z-index: -1;
+  box-shadow: inset 30px 10px #1112;
+}
+.tasse {
+  position: absolute;
+  top: 0; bottom: 0; left: 0px; right: 0;
+  margin: auto;
+  height: 0px;
+  width: 130px;
+  border-top: 150px solid antiquewhite;
+  border-left: transparent 5px solid;
+  border-right: transparent 5px solid;
+}
+.tasse::before {
+  content: "";
+  position: absolute;
+  height: 50px;
+  width: 120px;
+  border-radius: 0 0 15px 15px;
+  top: -5px;
+  left: 0;
+  background-color: antiquewhite;
+}
+.tasse::after {
+  content: "";
+  position: absolute;
+  height: 40px;
+  width: 40px;
+  border-radius: 0 0 0 15px;
+  top: 5px;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.09);
+}
+.schatten {
+  content: "";
+  position: absolute;
+  height: 0px;
+  width: 40px;
+  border-top: 40px solid rgba(0, 0, 0, 0.09);
+  border-left: 5px transparent solid;
+  top: -140px;
+  left: -5px;
+}
+.etikett {
+  content: "";
+  position: absolute;
+  top: 30px; bottom: 0; left: 0px; right: 0;
+  margin: auto;
+  height: 0;
+  width: 132px;
+  border-top: 130px solid #10b981;
+  border-left: transparent 5px solid;
+  border-right: transparent 5px solid;
+}
+.etikett::before {
+  content: "";
+  position: absolute;
+  height: 0;
+  width: 45px;
+  border-top: 130px solid rgba(0, 0, 0, 0.09);
+  border-left: transparent 5px solid;
+  border-right: transparent 2px solid;
+  top: -130px;
+  left: -5px;
+}
+.etikett::after {
+  content: "";
+  position: absolute;
+  height: 5px;
+  width: 125px;
+  background-color:  #059669;
+  top: 0px;
+  left: 0px;
+}
+.cover {
+  position: absolute;
+  width: 140px;
+  height: 25px;
+  background-color: #059669;
+  border-radius: 5px;
+  top: -160px;
+  left: -10px;
+}
+.cover::before {
+  content: "";
+  position: absolute;
+  width: 45px;
+  height: 25px;
+  background-color: rgba(0, 0, 0, 0.09);
+  border-radius: 5px 0 0 5px;
+  left: 0;
+}
+.cover::after {
+  content: "";
+  position: absolute;
+  width: 130px;
+  height: 5px;
+  background-color: rgba(0, 0, 0, 0.09);
+  border-radius: 5px 0 0 5px;
+  left: 5px;
+  top: 100%;
+}
+.oberseite {
+  position: absolute;
+  width: 130px;
+  height: 20px;
+  background-color: #34d399;
+  top: -180px;
+  left: -5px;
+  border-radius: 15px 15px 0 0;
+}
+.oberseite::before {
+  content: "";
+  position: absolute;
+  width: 30px;
+  height: 20px;
+  background-color: rgba(0, 0, 0, 0.09);
+  border-radius: 15px 0 0 0;
+  left: 0;
+  top: 0;
+}
+.oberseite::after {
+  content: "";
+  position: absolute;
+  top: -40px;
+  left: 140px;
+  border-radius: 5px;
+  width: 28px;
+  height: 12px;
+  background-color: rgb(223, 213, 193);
+  box-shadow: -120px -36px 0px rgb(223, 213, 193), 15px -50px 0px rgb(223, 213, 193);
+}
+.dampf {
+  position: absolute;
+  background-color: rgb(223, 213, 193);
+  width: 45px;
+  height: 18px;
+  top: calc(-198px - 18px);
+  left: 60px;
+  border-radius: 5px;
+  box-shadow: 8px -36px 0px rgb(223, 213, 193), -8px -72px 0px rgb(223, 213, 193), 20px -72px 0px rgb(223, 213, 193);
+}
+
+.dampf-bund {
+  position: absolute;
+  width: 45px;
+  height: 18px;
+  border-radius: 5px;
+  background: radial-gradient(20px 20px at 50%, transparent 50%, rgb(223, 213, 193) 51%) -8px 0 / 30px repeat-x;
+}
+.dampf-bund-1 {
+  top: calc(-198px );
+  left: 55px;
+}
+.dampf-bund-2 {
+  top: calc(-198px - 36px );
+  left: 70px;
+}
+.dampf-bund-3 {
+  top: calc(-198px - 72px );
+  left: 60px;
+}
+
+.logo {
+  position: absolute;
+  background-color: transparent;
+  width: 5px;
+  height: 35px;
+  background-color: white;
+  top: -85px;
+  left: calc(50% + 20px);
+  transform: rotate(25deg);
+}
+.logo::before {
+  content: "";
+  position: absolute;
+  background-color: transparent;
+  width: 17px;
+  height: 17px;
+  color: white;
+  border-top: solid 0.4rem;
+  border-right: solid 0.4rem;
+  top: -2px;
+  left: 6px;
+  transform: rotate(21deg);
+}
+.logo::after {
+  content: "";
+  position: absolute;
+  background-color: transparent;
+  width: 17px;
+  height: 17px;
+  color: white;
+  border-top: solid 0.4rem;
+  border-right: solid 0.4rem;
+  top: 12px;
+  left: -22px;
+  transform: rotate(200deg);
+}

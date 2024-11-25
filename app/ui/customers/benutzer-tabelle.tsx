@@ -1,12 +1,12 @@
 import { fetchBenutzerBeiFilter } from "@/app/lib/data"
 import Image from "next/image";
 
-export async function BenutzerTabelle({ query, aktuellSeite, filter}: { query: string, aktuellSeite: number, filter?: 'name' | 'email'}) {
+export default async function BenutzerTabelle({ query, aktuellSeite, filter}: { query: string, aktuellSeite: number, filter?: 'name' | 'email'}) {
     const customers = await fetchBenutzerBeiFilter(query, aktuellSeite, filter);
 
     return (
         <div>
-            <div className="flex">
+            {/* <div className="flex">
                 { customers?.map((cst, index) => 
                         <div key={cst.id} className="bg-blue-100 border-red flex">
                             <span>{index + 1}</span>
@@ -24,7 +24,7 @@ export async function BenutzerTabelle({ query, aktuellSeite, filter}: { query: s
                         </div>
                     ) 
                 }
-            </div>
+            </div> */}
         </div>
     )
 }

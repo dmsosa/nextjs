@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/24/outline';
+import {  ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/outline';
 import clsx from 'clsx';
 import Link from 'next/link';
 import { customGeneratePagination } from '@/app/lib/helpers';
@@ -50,7 +50,7 @@ export  function Seiten({ seiteAnzahl } : { seiteAnzahl: number }) {
       
 
       <PaginationArrows
-      active={aktuellSeite < seiteAnzahl}
+      active={true}
       href={createPageURL(aktuellSeite + 1)}
       direction='right'
       />
@@ -59,41 +59,41 @@ export  function Seiten({ seiteAnzahl } : { seiteAnzahl: number }) {
 }
 
 function PaginationNummer({ href, page, active, position }: { href: string, page: string | number, active?: boolean, position?: 'start' | 'end' | 'middle' | 'single'}) {
-  const className = clsx('flex h-10 w-10 items-center justify-center text-sm border', 
+  const className = clsx('flex h-10 w-10 items-center justify-center text-sm border-2', 
     {
-      'z-10 bg-green-600 text-white-400 border-green-400': active,
-      'hover:bg-gray-100': !active && position !== 'middle',
+      'z-10 bg-emerald-200 text-stone-800 border-emerald-800': active,
+      'hover:bg-emerald-400': !active && position !== 'middle',
       'rounded-l-md': position === 'start' || position === 'single',
       'rounded-r-md': position === 'end' || position === 'single',
-      'text-gray-300' : position === 'middle',
+      'text-stone-300' : position === 'middle',
     },)
   return (active || position === 'middle' ?
     <div className={className}>
       {page}
     </div>
     :
-    <div className={className}>
-      <Link href={href}>{page}</Link>
-    </div>
+    <Link className={className} href={href}>{page}</Link>
+
   );
 }
 function PaginationArrows({ href, active, direction }: { href: string, active?: boolean, direction: 'left' |'right' }) {
-  const icon = direction === 'left' ? ( <ArrowLeftIcon className='w-12 bg-red-500'/>) : ( <ArrowRightIcon className='w-12 bg-red-500'/>);
+  const icon = direction === 'left' ? (  
+  <ChevronLeftIcon />) : 
+  ( <ChevronRightIcon />);
 
   const className = clsx(
-    'flex h-10 w-10 items-center justify-center rounded-md border',
+    'flex h-10 w-10 items-center justify-center rounded-md border-2',
     {
-      'pointer-events-none text-gray-300': !active,
-      'hover:bg-gray-100': active,
+      'pointer-events-none text-stone-300 border-stone-300': !active,
+      'hover:cursor-pointer hover:bg-gray-100 text-emerald-800 border-emerald-800': active,
       'mr-2 md:mr-4': direction === 'left',
       'ml-2 md:ml-4': direction === 'right',
     },
   );
   return ( active ?
-    <div className={className}>
-      <Link href={href}>{icon}</Link>
-    </div> :
-    <div className={className}>{icon}</div>  
+      <Link className={className} href={href}>{icon}</Link>
+      :
+      <div className={className}>{icon}</div>  
   )
 }
 export default function Pagination({ totalPages }: { totalPages: number }) {
@@ -192,7 +192,7 @@ function PaginationArrow({
   isDisabled?: boolean;
 }) {
   const className = clsx(
-    'flex h-10 w-10 items-center justify-center rounded-md border',
+    'flex h-10 w-10 items-center justify-center rounded-md border-stone-300',
     {
       'pointer-events-none text-gray-300': isDisabled,
       'hover:bg-gray-100': !isDisabled,
@@ -203,9 +203,9 @@ function PaginationArrow({
 
   const icon =
     direction === 'left' ? (
-      <ArrowLeftIcon className="w-4" />
+      <ChevronLeftIcon className="w-4" />
     ) : (
-      <ArrowRightIcon className="w-4" />
+      <ChevronRightIcon className="w-4" />
     );
 
   return isDisabled ? (
