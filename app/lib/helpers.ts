@@ -10,7 +10,7 @@ export function customDateFormatter(dateStr: string, locale: string = 'de-DE') {
     const formatter = new Intl.DateTimeFormat(locale, options);
     return formatter.format(date);
 }
-export function customGeneratePagination(seiteAnzahl: number, aktuellSeite: number) {
+export function customGeneratePagination(aktuellSeite: number, seiteAnzahl: number) {
     
 
     if (seiteAnzahl < 7) {
@@ -20,7 +20,7 @@ export function customGeneratePagination(seiteAnzahl: number, aktuellSeite: numb
         return [1, 2, '...', seiteAnzahl - 2, seiteAnzahl - 1, seiteAnzahl];
     }
 
-    if (aktuellSeite <= 3) {
+    if (aktuellSeite < 3) {
         return [1, 2, 3, '...', seiteAnzahl - 1, seiteAnzahl];
     }
     return [

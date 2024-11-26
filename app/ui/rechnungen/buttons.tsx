@@ -5,8 +5,8 @@ import Link from 'next/link';
 export function CreateRechnung() {
   return (
     <Link
-      href="/dash/invoice/create"
-      className="flex h-10 items-center rounded-lg bg-blue-600 px-4 text-sm font-medium text-white transition-colors hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+      href="/dashboard/rechnungen/create"
+      className="flex h-10 items-center rounded-lg bg-emerald-600 px-4 text-sm font-bold text-white transition-colors hover:bg-emerald-500 focus-visible:outline-emerald-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
     >
       <span className="hidden md:block">Rechnung Erstellen</span>{' '}
       <PlusIcon className="h-5 md:ml-4" />
@@ -17,7 +17,7 @@ export function CreateRechnung() {
 export function UpdateRechnung({ id }: { id: string }) {
   return (
     <Link
-      href={"/dash/invoice/" + id + "/edit"}
+      href={"/dashboard/rechnungen/" + id + "/edit"}
       className="rounded-md border p-2 hover:bg-gray-100"
     >
       <PencilIcon className="w-5" />

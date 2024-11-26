@@ -1,4 +1,4 @@
-import { BenutzerErstellenForm } from "@/app/ui/customers/benutzer-form";
+import { BenutzerErstellenForm } from "@/app/ui/benutzer/benutzer-form";
 
 export default function Page() {
     return (

@@ -25,13 +25,14 @@ export default function Page() {
           </p>
           <Link
             href="/login"
-            className="flex items-center gap-5 self-start rounded-lg bg-emerald-500 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-blue-400 md:text-base"
+            className="flex items-center gap-5 self-start rounded-lg bg-emerald-500 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-emerald-400 md:text-base"
           >
             <span>Log in</span> <ArrowRightIcon className="w-5 md:w-6" />
           </Link>
         </div>
-        <div className="flex items-center justify-center p-6 md:w-3/5 md:px-28 md:py-12">
+        <div className="flex flex-col items-center justify-center p-6 md:w-3/5 md:px-28 md:py-12">
           <Coffee/>
+          <p className="text-center text-teal-700 font-bold tracking-tight border-b">Bei Durian gerstellt.</p>
         </div>
       </div>
     </main>

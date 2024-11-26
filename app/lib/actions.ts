@@ -13,7 +13,7 @@ export type TActionState = {
     },
     message?: string | null;
 }
-const InvoiceFormSchema = z.object({
+const RechnungFormSchema = z.object({
     id: z.string(),
     customerId: z.string({ invalid_type_error: 'Bitte wahlen Sie ein Benutzer an'}),
     amount: z.coerce.number().gt(0, 'Bitte geben Sie ein Wert grosseres als 0$ an!'),
@@ -21,15 +21,16 @@ const InvoiceFormSchema = z.object({
     date: z.string(),
 });
 
-const InvoiceErstellen = InvoiceFormSchema.omit({ id: true, date: true});
+const RechnungErstellen = RechnungFormSchema.omit({ id: true, date: true});
 
 export async function invoiceErstellen(prevState: TActionState, formData?: FormData) {
     if (!formData) { return { message: "Bitte geben Sie der FormData an!"} };
-    const validatedFields = InvoiceErstellen.safeParse({ 
+    const validatedFields = RechnungErstellen.safeParse({ 
         customerId: formData.get("customerId"),
         amount: formData.get("amount"),
         status: formData.get("status"),
     });
+
 
     if (!validatedFields.success) {
         return {errors: validatedFields.error.flatten().fieldErrors, message: "Fehler bei Erstellen der Rechnung!"};
@@ -43,16 +44,16 @@ export async function invoiceErstellen(prevState: TActionState, formData?: FormD
         VALUES (${customerId}, ${amountInCents}, ${status}, ${date})`;
     } catch (error: any) {
         console.log("Fehler bei der Erstellen der Rechnung!\n" + error.message);
-        return { errors: undefined, message: "Datenbankfehler: Fehler bei Speichern der Rechnung in Datenbank" }
+        return {errors: undefined, message: "Datenbankfehler: Fehler bei Speichern der Rechnung in Datenbank" }
     }
 
-    revalidatePath('/dash/invoice');
-    redirect('/dash/invoice');
+    revalidatePath('/dashboard/rechnungen');
+    redirect('/dashboard/rechnungen');
 }
 
 export async function rechnungBearbeiten(id: string, prevState: TActionState, formData?: FormData) {
     if (!formData) { return { message: "Bitte geben Sie der FormData an!"} };
-    const { customerId, amount, status } = InvoiceErstellen.parse({
+    const { customerId, amount, status } = RechnungErstellen.parse({
         customerId: formData.get('customerId'),
         amount: formData.get("amount"),
         status: formData.get("status"),
@@ -69,8 +70,8 @@ export async function rechnungBearbeiten(id: string, prevState: TActionState, fo
         console.log("Fehler bei der Bearbeitung der Rechnung!\n" + error.message);
         throw new Error("Fehler bei Erstellen der Rechnung" + error.message);
     }
-    revalidatePath('/dash/invoice');
-    redirect('/dash/invoice');
+    revalidatePath('/dashboard/rechnungen');
+    redirect('/dashboard/rechnungen');
 }
 
 export async function rechnungEntfernen(id: string) {
@@ -80,5 +81,5 @@ export async function rechnungEntfernen(id: string) {
         console.log("Fehler bei der Bearbeitung der Rechnung!\n" + error.message);
         throw new Error("Fehler bei Erstellen der Rechnung" + error.message);
     }
-    revalidatePath('/dash/invoice');
+    revalidatePath('/dashboard/rechnungen');
 }

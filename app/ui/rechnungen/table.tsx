@@ -1,11 +1,11 @@
 import Image from 'next/image';
-import { UpdateRechnung, DeleteRechnung } from '@/app/ui/invoices/buttons';
-import InvoiceStatus from '@/app/ui/invoices/status';
+import { UpdateRechnung, DeleteRechnung } from '@/app/ui/rechnungen/buttons';
+import InvoiceStatus from '@/app/ui/rechnungen/status';
 import { formatDateToLocal, formatCurrency } from '@/app/lib/utils';
 import { fetchFilteredInvoices } from '@/app/lib/data';
 import { customCurrencyFormatter, customDateFormatter } from '@/app/lib/helpers';
 
-export default async function InvoicesTable({
+export default async function RechnungenTabelle({
   query,
   currentPage,
 }: {
@@ -15,10 +15,10 @@ export default async function InvoicesTable({
   const invoices = await fetchFilteredInvoices(query, currentPage);
 
   return (
-    <div className="mt-6 flow-root">
+    <div className="mt-6 flow-root h-full">
       <div className="inline-block min-w-full align-middle">
         <div className="rounded-lg bg-gray-50 p-2 md:pt-0">
-          <div className="md:hidden bg-red-500">
+          <div className="md:hidden">
             {invoices?.map((invoice) => (
               <div
                 key={invoice.id}

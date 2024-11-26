@@ -1,7 +1,7 @@
 import { fetchCustomers, fetchRechnungBeiId } from "@/app/lib/data";
-import Breadcrumbs from "@/app/ui/invoices/breadcrumbs";
-import EditInvoiceForm from "@/app/ui/invoices/edit-form";
-import { InvoicesTableSkeleton } from "@/app/ui/skeletons";
+import Breadcrumbs from "@/app/ui/rechnungen/breadcrumbs";
+import EditInvoiceForm from "@/app/ui/rechnungen/edit-form";
+import { RechnungenTabelleSkeleton } from "@/app/ui/skeletons";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 
@@ -20,9 +20,9 @@ export default async function Page(props: { params?: Promise<{ id: string }> }) 
     return (
         <main>
             <Breadcrumbs breadcrumbs={[
-                { label: "Rechnungen", href: '/dash/invoice'}, { label: "Update", href: `/dash/invoice/${id}/edit`, active: true}
+                { label: "Rechnungen", href: '/dashboard/rechnungen'}, { label: "Bearbeiten", href: `/dashboard/rechnungen/${id}/edit`, active: true}
             ]}/>
-            <Suspense fallback={<InvoicesTableSkeleton/>}>
+            <Suspense fallback={<RechnungenTabelleSkeleton/>}>
                 <EditInvoiceForm  invoice={invoice} customers={customers}/>
             </Suspense>
         </main>

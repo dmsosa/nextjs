@@ -1,7 +1,7 @@
 import { fetchBenutzerBeiFilter, fetchBenutzerSeiten } from "@/app/lib/data"
-import BenutzerTabelle, { BenutzerTabelleSkeleton } from "@/app/ui/customers/benutzer-tabelle";
+import BenutzerTabelle, { BenutzerTabelleSkeleton } from "@/app/ui/benutzer/benutzer-tabelle";
 import { lusitana } from "@/app/ui/fonts";
-import Pagination from "@/app/ui/invoices/pagination";
+import Pagination from "@/app/ui/rechnungen/pagination";
 import Suchen from "@/app/ui/search";
 import { Suspense } from "react";
 
