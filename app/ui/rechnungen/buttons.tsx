@@ -1,6 +1,10 @@
+
+'use client'
+
 import { rechnungEntfernen } from '@/app/lib/actions';
 import { PencilIcon, PlusIcon, TrashIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
+import { MouseEvent, useState } from 'react';
 
 export function CreateRechnung() {
   return (
@@ -26,13 +30,48 @@ export function UpdateRechnung({ id }: { id: string }) {
 }
 
 export function DeleteRechnung({ id }: { id: string }) {
+
+  const [ showConfirm, setShowConfirm ] = useState(false);
+
+  const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
+      e.preventDefault();
+      setShowConfirm(!showConfirm);
+  }
   const rechnungEntfernenMitId = rechnungEntfernen.bind(null, id);
+
   return (
-    <form action={rechnungEntfernenMitId}>
-      <button className="rounded-md border p-2 hover:bg-gray-100">
-        <span className="sr-only">Delete</span>
-        <TrashIcon className="w-5" />
+      <form action={rechnungEntfernenMitId} className="relative">
+      <div className="absolute -top-24 right-0">
+      <div className={`relative bg-white p-2 rounded-lg border-2 border-gray-200 ${showConfirm ? 'block':'hidden'}
+      before:absolute
+      before:top-full
+      before:right-2	
+      before:border-t-8
+      before:border-t-gray-200
+      before:border-l-8
+      before:border-r-8
+      before:border-l-transparent
+      before:border-r-transparent
+      `}>
+              <p className="mb-2 font-bold">Bist du sicher?</p>
+              <div className="flex items-center justify-center gap-4">
+                  <button type="submit" 
+                  className="bg-red-500 hover:bg-red-600 border border-red-600 text-white font-medium transition-colors duration-200 p-2 px-4 text-md rounded-lg">
+                      Yes
+                  </button>
+                  <button 
+                  className="bg-green-500 hover:bg-green-600 border border-green-600 text-white font-medium transition-colors duration-200
+                  p-2 px-4 text-md rounded-lg"
+                  onClick={handleClick}>
+                      Nein
+                  </button>
+              </div>
+      </div>
+      </div>
+      
+      <button className="border p-2 hover:bg-emerald-200 transition-colors duration-200" onClick={handleClick}>
+          <TrashIcon className="w-5"></TrashIcon>
       </button>
-    </form>
-  );
+  </form>
+    );
 }

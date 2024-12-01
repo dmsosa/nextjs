@@ -1,7 +1,7 @@
-import Seiten  from '@/app/ui/rechnungen/pagination';
+import Seiten  from '@/app/ui/pagination';
 import { CreateRechnung } from '@/app/ui/rechnungen/buttons';
 import Suchen from '@/app/ui/search';
-import { fetchInvoicesPages } from '@/app/lib/data';
+import { fetchRechnungSeiten } from '@/app/lib/data';
 import { Suspense } from 'react';
 import { RechnungenTabelleSkeleton } from '@/app/ui/skeletons';
 import Breadcrumbs from '@/app/ui/rechnungen/breadcrumbs';
@@ -11,9 +11,8 @@ export default async function Page(props: { searchParams: Promise<{  query: stri
 
     const params = await props.searchParams;
     const query  = params?.query || '';
-    const currentPage = Number(params?.page) || 1;
-    const seitenAnzahl = await fetchInvoicesPages(query);
-
+    const aktuellSeite = Number(params?.page) || 1;
+    const seitenAnzahl = await fetchRechnungSeiten(query);
   return (
     <main>
       <Breadcrumbs breadcrumbs={[{label: 'Rechnungen', href: '/dashboard/rechnungen', active: true}]}/>
@@ -21,11 +20,11 @@ export default async function Page(props: { searchParams: Promise<{  query: stri
         <Suchen platzhalter="Rechnung suchen..." />
         <CreateRechnung />
       </div>
-       <Suspense key={query + currentPage} fallback={<RechnungenTabelleSkeleton />}>
-        <RechnungenTabelle query={query} currentPage={currentPage} />
+       <Suspense key={query + aktuellSeite} fallback={<RechnungenTabelleSkeleton />}>
+        <RechnungenTabelle query={query} aktuellSeite={aktuellSeite} />
       </Suspense>
       <div className="mt-5 flex w-full justify-center">
-        <Seiten seiteAnzahl={seitenAnzahl} />
+        <Seiten seitenAnzahl={seitenAnzahl} />
       </div>
     </main>
   );

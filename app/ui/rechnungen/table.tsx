@@ -1,23 +1,22 @@
 import Image from 'next/image';
 import { UpdateRechnung, DeleteRechnung } from '@/app/ui/rechnungen/buttons';
-import InvoiceStatus from '@/app/ui/rechnungen/status';
-import { formatDateToLocal, formatCurrency } from '@/app/lib/utils';
-import { fetchFilteredInvoices } from '@/app/lib/data';
-import { customCurrencyFormatter, customDateFormatter } from '@/app/lib/helpers';
+import { fetchRechnungenBeiFilter } from '@/app/lib/data';
+import RechnungStatus from '@/app/ui/rechnungen/status';
 
 export default async function RechnungenTabelle({
   query,
-  currentPage,
+  aktuellSeite,
 }: {
   query: string;
-  currentPage: number;
+  aktuellSeite: number;
 }) {
-  const invoices = await fetchFilteredInvoices(query, currentPage);
+  
+  const invoices = await fetchRechnungenBeiFilter(query, aktuellSeite);
 
   return (
     <div className="mt-6 flow-root h-full">
       <div className="inline-block min-w-full align-middle">
-        <div className="rounded-lg bg-gray-50 p-2 md:pt-0">
+        <div className="rounded-lg bg-emerald-50">
           <div className="md:hidden">
             {invoices?.map((invoice) => (
               <div
@@ -38,14 +37,14 @@ export default async function RechnungenTabelle({
                     </div>
                     <p className="text-sm text-gray-500">{invoice.email}</p>
                   </div>
-                  <InvoiceStatus status={invoice.status} />
+                  <RechnungStatus status={invoice.status} />
                 </div>
                 <div className="flex w-full items-center justify-between pt-4">
                   <div>
                     <p className="text-xl font-medium">
-                      {customCurrencyFormatter(invoice.amount)}
+                      {invoice.amount}
                     </p>
-                    <p>{customDateFormatter(invoice.date)}</p>
+                    <p>{invoice.date}</p>
                   </div>
                   <div className="flex justify-end gap-2">
                     <UpdateRechnung id={invoice.id} />
@@ -82,9 +81,9 @@ export default async function RechnungenTabelle({
               {invoices?.map((invoice) => (
                 <tr
                   key={invoice.id}
-                  className=" border-b py-3 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-2xl [&:first-child>td:last-child]:rounded-tr-2xl [&:last-child>td:first-child]:rounded-bl-2xl [&:last-child>td:last-child]:rounded-br-2xl"
+                  className=" border-b py-3 text-xs last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-2xl [&:first-child>td:last-child]:rounded-tr-2xl [&:last-child>td:first-child]:rounded-bl-2xl [&:last-child>td:last-child]:rounded-br-2xl"
                 >
-                  <td className="whitespace-nowrap py-3 pl-6 pr-3">
+                  <td className="py-3 pl-2 pr-5">
                     <div className="flex items-center gap-3">
                       <Image
                         src={invoice.image_url}
@@ -96,20 +95,20 @@ export default async function RechnungenTabelle({
                       <p>{invoice.name}</p>
                     </div>
                   </td>
-                  <td className="whitespace-nowrap px-3 py-3">
+                  <td className="whitespace-nowrap p-3">
                     {invoice.email}
                   </td>
-                  <td className="whitespace-nowrap px-3 py-3">
-                    {formatCurrency(invoice.amount)}
+                  <td className="p-3">
+                    {invoice.amount}
                   </td>
-                  <td className="whitespace-nowrap px-3 py-3">
-                    {formatDateToLocal(invoice.date)}
+                  <td className="p-3">
+                    {invoice.date}
                   </td>
-                  <td className="whitespace-nowrap px-3 py-3">
-                    <InvoiceStatus status={invoice.status} />
+                  <td className="p-3">
+                    <RechnungStatus status={invoice.status} />
                   </td>
-                  <td className="whitespace-nowrap py-3 pl-6 pr-3">
-                    <div className="flex justify-center gap-3">
+                  <td className="py-3 px-1">
+                    <div className="flex justify-center gap-2">
                       <UpdateRechnung id={invoice.id} />
                       <DeleteRechnung id={invoice.id} />
                     </div>

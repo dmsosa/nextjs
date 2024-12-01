@@ -1,9 +1,9 @@
 import { Suspense } from "react";
 import CardWrapper from "../../ui/dashboard/cards";
-import LatestInvoices from "../../ui/dashboard/latest-invoices";
+import LetzteRechnung from "../../ui/dashboard/letzte-rechnung";
 import RevenueChart from "../../ui/dashboard/revenue-chart";
 import { lusitana } from "../../ui/fonts";
-import {  CardsSkeleton, LatestInvoicesSkeleton, RevenueChartSkeleton } from "@/app/ui/skeletons";
+import {  CardsSkeleton, LetzteRechnungSkeleton, RevenueChartSkeleton } from "@/app/ui/skeletons";
 
 export default async function Page() {
 
@@ -17,7 +17,7 @@ export default async function Page() {
         </div>
         <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-4 lg:grid-cols-8">
           <Suspense fallback={<RevenueChartSkeleton/>}><RevenueChart/></Suspense> 
-          <Suspense fallback={<LatestInvoicesSkeleton />}><LatestInvoices /></Suspense>
+          <Suspense fallback={<LetzteRechnungSkeleton />}><LetzteRechnung /></Suspense>
         </div>
       </main>
     )

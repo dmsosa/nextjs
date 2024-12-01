@@ -1,4 +1,4 @@
-import { fetchCustomers, fetchRechnungBeiId } from "@/app/lib/data";
+import { fetchBenutzer, fetchRechnungBeiId } from "@/app/lib/data";
 import Breadcrumbs from "@/app/ui/rechnungen/breadcrumbs";
 import EditInvoiceForm from "@/app/ui/rechnungen/edit-form";
 import { RechnungenTabelleSkeleton } from "@/app/ui/skeletons";
@@ -10,7 +10,7 @@ export default async function Page(props: { params?: Promise<{ id: string }> }) 
     const id = params?.id || '';
     const [invoice, customers] = await Promise.all([
         fetchRechnungBeiId(id),
-        fetchCustomers(),
+        fetchBenutzer(),
       ]);
 
       if (!invoice) {

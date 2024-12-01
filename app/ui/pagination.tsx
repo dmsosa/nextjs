@@ -5,13 +5,12 @@ import clsx from 'clsx';
 import Link from 'next/link';
 import { customGeneratePagination } from '@/app/lib/helpers';
 import {  usePathname, useSearchParams } from 'next/navigation';
-import { generatePagination } from '@/app/lib/utils';
 
-export default function Seiten({ seiteAnzahl } : { seiteAnzahl: number }) {
+export default function Seiten({ seitenAnzahl } : { seitenAnzahl: number }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const aktuellSeite = Number(searchParams.get("page")) || 1;
-  const alleSeiten = customGeneratePagination( aktuellSeite, seiteAnzahl);
+  const alleSeiten = customGeneratePagination( aktuellSeite, seitenAnzahl);
 
   const createPageURL = (pageNummer: string | number) =>  {
     const urlParams = new URLSearchParams(searchParams);

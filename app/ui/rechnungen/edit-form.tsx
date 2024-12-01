@@ -1,6 +1,6 @@
 'use client';
 
-import { CustomerField, InvoiceForm } from '@/app/lib/definitions';
+import { BenutzerFeld, RechnungForm } from '@/app/lib/definitions';
 import {
   CheckIcon,
   ClockIcon,
@@ -16,19 +16,22 @@ export default function EditInvoiceForm({
   invoice,
   customers,
 }: {
-  invoice: InvoiceForm;
-  customers: CustomerField[];
+  invoice: RechnungForm;
+  customers: BenutzerFeld[];
 }) {
   const initialState: TActionState = {errors: {}, message: null};
   const rechnungBearbeitenMitId = rechnungBearbeiten.bind(null, invoice.id);
   const [ state, formAction ] = useActionState<TActionState>(rechnungBearbeitenMitId, initialState);
+
+  const currentCustomer = customers.filter((cst) => cst.id === invoice.customer_id)[0];
+
   return (
     <form action={formAction}>
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
         {/* Customer Name */}
         <div className="mb-4">
           <label htmlFor="customer" className="mb-2 block text-sm font-medium">
-            Choose customer
+            {`Aktuell Benutzer: ${currentCustomer.name}`}
           </label>
           <div className="relative">
             <select

@@ -9,14 +9,14 @@ export type User = {
   password: string;
 };
 
-export type Customer = {
+export type TBenutzer = {
   id: string;
   name: string;
   email: string;
   image_url: string;
 };
 
-export type Invoice = {
+export type TRechnung = {
   id: string;
   customer_id: string;
   amount: number;
@@ -26,12 +26,12 @@ export type Invoice = {
   status: 'pending' | 'paid';
 };
 
-export type Revenue = {
+export type TRevenue = {
   month: string;
   revenue: number;
 };
 
-export type LatestInvoice = {
+export type LetzteRechnung = {
   id: string;
   name: string;
   image_url: string;
@@ -40,11 +40,11 @@ export type LatestInvoice = {
 };
 
 // The database returns a number for amount, but we later format it to a string with the formatCurrency function
-export type LatestInvoiceRaw = Omit<LatestInvoice, 'amount'> & {
+export type LetzteRechnungRaw = Omit<LetzteRechnung, 'amount'> & {
   amount: number;
 };
 
-export type InvoicesTable = {
+export type TRechnungTabelle = {
   id: string;
   customer_id: string;
   name: string;
@@ -55,7 +55,18 @@ export type InvoicesTable = {
   status: 'pending' | 'paid';
 };
 
-export type CustomersTableType = {
+export type TRechnungTabelleFormatted = {
+  id: string;
+  customer_id: string;
+  name: string;
+  email: string;
+  image_url: string;
+  date: string;
+  amount: string;
+  status: 'pending' | 'paid';
+};
+
+export type TBenutzerTabelle = {
   id: string;
   name: string;
   email: string;
@@ -65,7 +76,7 @@ export type CustomersTableType = {
   total_paid: number;
 };
 
-export type FormattedCustomersTable = {
+export type TBenutzerTabelleFormatted = {
   id: string;
   name: string;
   email: string;
@@ -75,12 +86,13 @@ export type FormattedCustomersTable = {
   total_paid: string;
 };
 
-export type CustomerField = {
+
+export type BenutzerFeld = {
   id: string;
   name: string;
 };
 
-export type InvoiceForm = {
+export type RechnungForm = {
   id: string;
   customer_id: string;
   amount: number;
