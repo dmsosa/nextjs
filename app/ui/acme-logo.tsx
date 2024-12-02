@@ -5,7 +5,7 @@ export default function AcmeLogo() {
     <div
       className={`${lusitana.className} antialiased flex flex-row items-center leading-none`}
     >
-      <GlobeAltIcon className="h-12 w-12 rotate-[15deg]" />
+      <GlobeAltIcon width={40} height={40} className="rotate-[15deg]" />
       <p className="text-[49px]">Acme</p>
     </div>
   );

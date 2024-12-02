@@ -1,15 +1,13 @@
 import AcmeLogo from '@/app/ui/acme-logo';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
-import Image from 'next/image';
 import Link from 'next/link';
 import Coffee from './ui/coffee';
 
 export default function Page() {
   return (
     <main className="flex min-h-screen flex-col p-6">
-      <div className="flex h-20 shrink-0 items-end rounded-lg bg-emerald-400 p-4 md:h-52">
+      <div className="flex h-32 shrink-0 items-end rounded-lg bg-emerald-400 p-4 md:h-52 pt-4 text-white">
         <AcmeLogo />
-        
       </div>
       <div className="mt-4 flex grow flex-col gap-4 md:flex-row">
         <div className="flex flex-col justify-center gap-6 rounded-lg bg-gray-50 px-6 py-10 md:w-2/5 md:px-20">
