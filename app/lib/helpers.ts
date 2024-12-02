@@ -1,4 +1,4 @@
-import { Revenue } from "./definitions";
+import { TRevenue } from "./definitions";
 
 export function customCurrencyFormatter(amount: number) {
     const formatter = new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'eur', minimumSignificantDigits: 2})
@@ -28,7 +28,7 @@ export function customGeneratePagination(aktuellSeite: number, seiteAnzahl: numb
     ]
 }
 
-export function customGeneratseYAxis(revenues: Revenue[]) {
+export function customGeneratseYAxis(revenues: TRevenue[]) {
     const labels = [];
     const maxRevenue = Math.max(...revenues.map((r => r.revenue)));
     const topLabel = Math.ceil((maxRevenue / 1000)) * 1000;
